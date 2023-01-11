@@ -29,12 +29,18 @@ export default function Home({ searchValue, setSearchValue }) {
     fetchData();
     window.scrollTo(0, 0);
   }, [categoryId, sortType]);
-  const coffeeItems = items.filter((obj) => {
-    if (obj.title.includes(searchValue)) {
-      return true;
-    }
-    return false;
-  });
+  const pizzas = items
+    .filter((obj) => {
+      if (obj.name.toLowerCase().includes(searchValue.toLowerCase())) {
+        return true;
+      }
+      return false;
+    })
+    .map((obj) => <Pizza {...obj} key={obj.id} />);
+
+  const sceletons = [...new Array(6)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
   return (
     <>
       <div className="content__top">
@@ -45,14 +51,7 @@ export default function Home({ searchValue, setSearchValue }) {
         <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {/* {items.map((obj, id) => (
-              <Skeleton {...obj} key={id} />
-            ))} */}
-        {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : items.map((obj, id) => <Pizza {...obj} key={id} />)}
-      </div>
+      <div className="content__items">{isLoading ? sceletons : pizzas}</div>
     </>
   );
 }
