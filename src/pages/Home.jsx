@@ -16,11 +16,12 @@ export default function Home({ searchValue, setSearchValue }) {
 
   useEffect(() => {
     setIsLoading(true);
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
+    const search = searchValue ? `&search=${searchValue}` : "";
+
     async function fetchData() {
       const res = await fetch(
-        `https://63a388c89704d18da09112fd.mockapi.io/items?${
-          categoryId > 0 ? `category=${categoryId}` : ""
-        }&sortBy=${sortType.sortProperty}&order=desc `
+        `https://63a388c89704d18da09112fd.mockapi.io/items?${category}&sortBy=${sortType.sortProperty}&order=desc${search} `
       );
       const item = await res.json();
       setItems(item);
@@ -28,14 +29,14 @@ export default function Home({ searchValue, setSearchValue }) {
     }
     fetchData();
     window.scrollTo(0, 0);
-  }, [categoryId, sortType]);
+  }, [categoryId, sortType, searchValue]);
   const pizzas = items
-    .filter((obj) => {
-      if (obj.name.toLowerCase().includes(searchValue.toLowerCase())) {
-        return true;
-      }
-      return false;
-    })
+    // .filter((obj) => {
+    //   if (obj.name.toLowerCase().includes(searchValue.toLowerCase())) {
+    //     return true;
+    //   }
+    //   return false;
+    // })
     .map((obj) => <Pizza {...obj} key={obj.id} />);
 
   const sceletons = [...new Array(6)].map((_, index) => (
