@@ -5,8 +5,10 @@ import Pizza from "../components/Pizza";
 import Skeleton from "../components/Pizza/Skeleton";
 import { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
+import { SearchContext } from "../App";
 
-export default function Home({ searchValue, setSearchValue }) {
+export default function Home() {
+  const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryId, setCategoryId] = React.useState(0);

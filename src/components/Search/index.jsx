@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BiSearch, BiX } from "react-icons/bi";
 import styles from "./Search.module.scss";
+import { SearchContext } from "../../App";
 
-export default function Search({ searchValue, setSearchValue }) {
+export default function Search() {
+  const { searchValue, setSearchValue } = useContext(SearchContext);
   return (
     <div className={styles.root}>
       <BiSearch className={styles.icon} />
