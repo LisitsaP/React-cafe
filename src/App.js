@@ -1,7 +1,6 @@
 import logo from "./logo.svg";
 import "./scss/app.scss";
 import React from "react";
-
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
@@ -16,7 +15,6 @@ export const SearchContext = React.createContext("");
 const coffees = [];
 function App() {
   const [searchValue, setSearchValue] = React.useState("");
-  console.log(searchValue);
 
   return (
     <div className="wrapper">
