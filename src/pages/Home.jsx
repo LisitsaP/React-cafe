@@ -13,6 +13,7 @@ import { SearchContext } from "../App";
 export default function Home() {
   const dispatch = useDispatch();
   const categoryId = useSelector((state) => state.filter.categoryId);
+  const sortType = useSelector((state) => state.filter.sort.sortProperty);
   console.log("id category", categoryId);
 
   // const setCategoryId = () => {};
@@ -20,12 +21,11 @@ export default function Home() {
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [categoryId, setCategoryId] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [sortType, setSortType] = React.useState({
-    name: "популярности",
-    sortProperty: "raiting",
-  });
+  // const [sortType, setSortType] = React.useState({
+  //   name: "популярности",
+  //   sortProperty: "raiting",
+  // });
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -63,7 +63,8 @@ export default function Home() {
     <>
       <div className="content__top">
         <Categories valueId={categoryId} onClickCategory={onClickCategory} />
-        <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} />
+        {/* <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} /> */}
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? sceletons : pizzas}</div>
