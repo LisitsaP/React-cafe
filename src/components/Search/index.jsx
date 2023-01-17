@@ -5,6 +5,11 @@ import { SearchContext } from "../../App";
 
 export default function Search() {
   const { searchValue, setSearchValue } = useContext(SearchContext);
+
+  const onClickClear = () => {
+    setSearchValue("");
+    document.querySelector("input").focus();
+  };
   return (
     <div className={styles.root}>
       <BiSearch className={styles.icon} />
@@ -15,7 +20,7 @@ export default function Search() {
         className={styles.input}
       />
       {searchValue && (
-        <BiX onClick={() => setSearchValue("")} className={styles.iconCloce} />
+        <BiX onClick={onClickClear} className={styles.iconCloce} />
       )}
     </div>
   );
