@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 import { setCategoryId } from "../redux/slices/filterSlice";
 import Categories from "../components/Categories";
@@ -36,15 +37,17 @@ export default function Home() {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    async function fetchData() {
-      const res = await fetch(
-        `https://63a388c89704d18da09112fd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType.sortProperty}&order=desc${search} `
-      );
-      const item = await res.json();
-      setItems(item);
-      setIsLoading(false);
+    async function axiosData() {
+      const res = await axios
+        .get(
+          `https://63a388c89704d18da09112fd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType.sortProperty}&order=desc${search} `
+        )
+        .then((res) => {
+          setItems(res.data);
+          setIsLoading(false);
+        });
     }
-    fetchData();
+    axiosData();
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
   const pizzas = items
