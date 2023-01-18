@@ -1,30 +1,41 @@
 import React, { useContext } from "react";
 import { BiSearch, BiX } from "react-icons/bi";
 import styles from "./Search.module.scss";
+import debounce from "lodash.debounce";
 import { SearchContext } from "../../App";
-import { useRef } from "react";
+import { useRef, useCallback, useState } from "react";
 
 export default function Search() {
-  const { searchValue, setSearchValue } = useContext(SearchContext);
+  const [value, setValue] = useState("");
+  const { setSearchValue } = useContext(SearchContext);
   const inputRef = useRef();
 
   const onClickClear = () => {
     setSearchValue("");
+    setValue("");
     inputRef.current.focus();
+  };
+  const updateSearchValue = useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 2000),
+    []
+  );
+  const onChangeInput = (event) => {
+    setValue(event.target.value);
+    updateSearchValue(event.target.value);
   };
   return (
     <div className={styles.root}>
       <BiSearch className={styles.icon} />
       <input
         ref={inputRef}
-        value={searchValue}
+        value={value}
         placeholder="поиск"
-        onChange={(event) => setSearchValue(event.target.value)}
+        onChange={onChangeInput}
         className={styles.input}
       />
-      {searchValue && (
-        <BiX onClick={onClickClear} className={styles.iconCloce} />
-      )}
+      {value && <BiX onClick={onClickClear} className={styles.iconCloce} />}
     </div>
   );
 }
