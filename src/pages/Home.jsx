@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-import { setCategoryId } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Pizza from "../components/Pizza";
@@ -13,8 +13,10 @@ import { SearchContext } from "../App";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const categoryId = useSelector((state) => state.filter.categoryId);
-  const sortType = useSelector((state) => state.filter.sort.sortProperty);
+  const { categoryId, sort, currentPage } = useSelector(
+    (state) => state.filter
+  );
+  // const sortType = useSelector((state) => state.filter.sort.sortProperty);
   console.log("id category", categoryId);
 
   // const setCategoryId = () => {};
@@ -22,7 +24,7 @@ export default function Home() {
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = React.useState(1);
+  // const [currentPage, setCurrentPage] = React.useState(1);
   // const [sortType, setSortType] = React.useState({
   //   name: "популярности",
   //   sortProperty: "raiting",
@@ -30,6 +32,10 @@ export default function Home() {
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
+  };
+
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number));
   };
 
   useEffect(() => {
@@ -40,7 +46,7 @@ export default function Home() {
     async function axiosData() {
       const res = await axios
         .get(
-          `https://63a388c89704d18da09112fd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType.sortProperty}&order=desc${search} `
+          `https://63a388c89704d18da09112fd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort.sortProperty}&order=desc${search} `
         )
         .then((res) => {
           setItems(res.data);
@@ -49,7 +55,7 @@ export default function Home() {
     }
     axiosData();
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
+  }, [categoryId, sort.sortProperty, searchValue, currentPage]);
   const pizzas = items
     // .filter((obj) => {
     //   if (obj.name.toLowerCase().includes(searchValue.toLowerCase())) {
@@ -71,7 +77,7 @@ export default function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? sceletons : pizzas}</div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </>
   );
 }
