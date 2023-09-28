@@ -12,9 +12,9 @@ function Header() {
           </Link>
           <div>
             <Link to="/">
-              <h1>React Coffee</h1>
+              <h1>React Pizza</h1>
             </Link>
-            <p>самые вкусные напитки во вселенной</p>
+            <p>самая вкусная пица во вселенной</p>
           </div>
         </div>
         <Search />

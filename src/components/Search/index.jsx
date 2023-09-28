@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BiSearch, BiX } from "react-icons/bi";
+// import { BiSearch, BiX } from "react-icons/bi";
 import styles from "./Search.module.scss";
 import debounce from "lodash.debounce";
 import { SearchContext } from "../../App";
@@ -27,7 +27,7 @@ export default function Search() {
   };
   return (
     <div className={styles.root}>
-      <BiSearch className={styles.icon} />
+      {/* <BiSearch className={styles.icon} /> */}
       <input
         ref={inputRef}
         value={value}
@@ -35,7 +35,7 @@ export default function Search() {
         onChange={onChangeInput}
         className={styles.input}
       />
-      {value && <BiX onClick={onClickClear} className={styles.iconCloce} />}
+      {/* {value && <BiX onClick={onClickClear} className={styles.iconCloce} />} */}
     </div>
   );
 }
