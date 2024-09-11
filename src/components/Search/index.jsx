@@ -24,7 +24,7 @@ export default function Search() {
   const onChangeInput = (event) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
-  }; 
+  };
   return (
     <div className={styles.root}>
       {/* <BiSearch className={styles.icon} /> */}

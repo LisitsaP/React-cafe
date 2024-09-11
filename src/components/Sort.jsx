@@ -2,6 +2,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../redux/slices/filterSlice";
 
+const options = [
+  { name: "популярности", sortProperty: "raiting" },
+  { name: "цене", sortProperty: "price" },
+  { name: "aлфавиту", sortProperty: "title" },
+];
 function Sort() {
   // { sortType, onChangeSort }
   const dispatch = useDispatch();
@@ -9,11 +14,6 @@ function Sort() {
 
   const [popup, setPopup] = React.useState(false);
   // const [selected, setSelected] = React.useState(0);
-  const options = [
-    { name: "популярности", sortProperty: "raiting" },
-    { name: "цене", sortProperty: "price" },
-    { name: "aлфавиту", sortProperty: "title" },
-  ];
   // const optionName = options[sortType].name;
   const clickOpen = () => {
     setPopup(!popup);

@@ -29,6 +29,7 @@ export default function Home() {
   //   name: "популярности",
   //   sortProperty: "raiting",
   // });
+  // "homepage": "https://LisitsaP.github.io/React-cafe", json
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
